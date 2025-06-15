@@ -167,5 +167,5 @@ with tab5:
     4. **Break Even Point (BEP)**
 
     Semua model dapat disesuaikan melalui input pengguna. Cocok untuk simulasi, analisis, dan edukasi.  
-    👨‍💻 Dibuat oleh: Kang Yann
+    👨‍💻 Dibuat oleh: Kelompok 6
     """)
