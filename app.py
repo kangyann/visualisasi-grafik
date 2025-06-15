@@ -2,6 +2,7 @@ import streamlit as st
 import numpy as np
 from scipy.optimize import linprog
 import matplotlib.pyplot as plt
+import io
 
 st.set_page_config(page_title="Model Matematika Interaktif", layout="wide")
 
@@ -71,7 +72,16 @@ with tab1:
         ax.set_ylabel("y")
         ax.legend()
         ax.set_title("Area Feasible")
-        st.pyplot(fig)
+
+        buf = io.BytesIO()
+        fig.savefig(buf, format="png", bbox_inches="tight")
+        st.image(buf, width=480) 
+        st.markdown("### ✍️ Penjelasan:")
+        st.markdown("""
+        - Garis biru dan oranye adalah batas dari dua kendala.
+        - Area berwarna oranye muda adalah **wilayah feasible** (layak).
+        - Titik merah adalah **solusi optimal** yang memaksimalkan fungsi tujuan Z.
+        """)
     else:
         st.error("Solusi tidak ditemukan.")
 
@@ -104,7 +114,17 @@ with tab2:
         ax.set_ylabel("Total Cost")
         ax.set_title("EOQ vs Total Cost")
         ax.legend()
-        st.pyplot(fig)
+        # st.pyplot(fig)
+        buf = io.BytesIO()
+        fig.savefig(buf, format="png", bbox_inches="tight")
+        st.image(buf, width=480) 
+        st.markdown("### ✍️ Penjelasan:")
+        st.markdown(f"""
+        - Permintaan tahunan: **{D:.0f} unit**
+        - Biaya pemesanan: **Rp {S:,.0f}**
+        - Biaya penyimpanan: **Rp {H:,.0f} per unit**
+        - Jadi, pemesanan optimal adalah **{EOQ:.2f} unit** setiap kali pesan.
+        """)
     else:
         st.warning("Masukkan nilai D, S, dan H yang valid (> 0).")
 
@@ -155,7 +175,17 @@ with tab3:
         ax.set_ylabel("Nilai")
         ax.set_title("Antrian M/M/1")
         ax.legend()
-        st.pyplot(fig)
+
+        buf = io.BytesIO()
+        fig.savefig(buf, format="png", bbox_inches="tight")
+        st.image(buf, width=480) 
+
+        st.markdown("""
+        ### 📌 Penjelasan Grafik:
+        - **Semakin besar λ**, sistem semakin sibuk.
+        - Ketika λ hampir menyamai μ, **semua metrik melonjak**: antrian dan waktu meningkat tajam.
+        - Model valid **hanya jika λ < μ**.
+        """)
 
 # --- 4. BEP ---
 with tab4:
@@ -187,7 +217,18 @@ with tab4:
         ax.set_ylabel("Rupiah")
         ax.set_title("Break Even Point")
         ax.legend()
-        st.pyplot(fig)
+
+        buf = io.BytesIO()
+        fig.savefig(buf, format="png", bbox_inches="tight")
+        st.image(buf, width=480) 
+
+        st.markdown("""
+        ### 📌 Penjelasan Grafik:
+        - Garis **biru**: pendapatan (TR = P × Q)
+        - Garis **orange**: biaya total (TC = FC + VC × Q)
+        - Titik **potong biru** adalah titik impas (BEP)
+        - Sebelah kiri BEP: Rugi, Sebelah kanan BEP: Untung
+        """)
     else:
         st.warning("P harus lebih besar dari VC, dan FC harus > 0.")
 
